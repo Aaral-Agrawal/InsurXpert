@@ -1,0 +1,13 @@
+[package]
+name = "MyMoveProject"
+version = "0.0.1"
+authors = ["Aaral Agrawal"]
+license = "MIT"
+
+[dependencies]
+AptosFramework = {  git = "https://github.com/aptos-labs/aptos-core.git", rev = "main", subdir = "aptos-move/framework/aptos-framework"}
+
+[addresses]
+InsurXpert = "0x1"
+MyMoveProject = "0x2"
+
