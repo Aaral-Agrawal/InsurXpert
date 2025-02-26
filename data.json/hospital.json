@@ -1,0 +1,27 @@
+[
+    {
+      "hospital_id": "HOSP001",
+      "name": "City Hospital",
+      "address": "456 Elm St, NY, USA",
+      "accreditation": "JCI Certified",
+      "contact": "+1 987 654 321",
+      "email": "info@cityhospital.com"
+    },
+    {
+      "hospital_id": "HOSP002",
+      "name": "Sunrise Medical Center",
+      "address": "789 Oak St, LA, USA",
+      "accreditation": "ISO 9001 Certified",
+      "contact": "+1 765 432 109",
+      "email": "info@sunrisemed.com"
+    },
+    {
+      "hospital_id": "HOSP003",
+      "name": "Greenwood Clinic",
+      "address": "321 Pine St, TX, USA",
+      "accreditation": "NABH Accredited",
+      "contact": "+1 543 210 678",
+      "email": "info@greenwoodclinic.com"
+    }
+  ]
+  

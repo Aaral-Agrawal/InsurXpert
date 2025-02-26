@@ -1,0 +1,36 @@
+[
+    {
+      "claim_id": "CLAIM001",
+      "patient_id": "P001",
+      "insurance_id": "INS-12345",
+      "bill_id": "BILL001",
+      "hospital_id": "HOSP001",
+      "claim_amount": 300,
+      "status": "Under Review",
+      "submitted_date": "2025-02-21",
+      "approved_date": null
+    },
+    {
+      "claim_id": "CLAIM002",
+      "patient_id": "P002",
+      "insurance_id": "INS-67890",
+      "bill_id": "BILL002",
+      "hospital_id": "HOSP002",
+      "claim_amount": 250,
+      "status": "Approved",
+      "submitted_date": "2025-01-16",
+      "approved_date": "2025-01-18"
+    },
+    {
+      "claim_id": "CLAIM003",
+      "patient_id": "P003",
+      "insurance_id": "INS-54321",
+      "bill_id": "BILL003",
+      "hospital_id": "HOSP003",
+      "claim_amount": 130,
+      "status": "Rejected",
+      "submitted_date": "2024-12-11",
+      "approved_date": null
+    }
+  ]
+  

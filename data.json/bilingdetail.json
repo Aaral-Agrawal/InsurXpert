@@ -1,0 +1,39 @@
+[
+    {
+      "bill_id": "BILL001",
+      "patient_id": "P001",
+      "hospital_id": "HOSP001",
+      "services": [
+        { "service": "X-ray", "cost": 100 },
+        { "service": "Cast Application", "cost": 200 }
+      ],
+      "total_amount": 300,
+      "date": "2025-02-20",
+      "status": "Pending"
+    },
+    {
+      "bill_id": "BILL002",
+      "patient_id": "P002",
+      "hospital_id": "HOSP002",
+      "services": [
+        { "service": "Oxygen Therapy", "cost": 150 },
+        { "service": "Emergency Consultation", "cost": 100 }
+      ],
+      "total_amount": 250,
+      "date": "2025-01-15",
+      "status": "Paid"
+    },
+    {
+      "bill_id": "BILL003",
+      "patient_id": "P003",
+      "hospital_id": "HOSP003",
+      "services": [
+        { "service": "Lipid Panel Test", "cost": 50 },
+        { "service": "Doctor Consultation", "cost": 80 }
+      ],
+      "total_amount": 130,
+      "date": "2024-12-10",
+      "status": "Pending"
+    }
+  ]
+  

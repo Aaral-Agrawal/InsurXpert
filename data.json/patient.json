@@ -1,0 +1,47 @@
+[
+    {
+      "patient_id": "P001",
+      "name": "John Doe",
+      "dob": "1985-06-15",
+      "insurance_id": "INS-12345",
+      "insurance_provider": "HealthCo",
+      "contact": "+1 234 567 890",
+      "email": "john.doe@example.com",
+      "address": "123 Main St, NY, USA",
+      "medical_history": ["Diabetes", "Hypertension"]
+    },
+    {
+      "patient_id": "P002",
+      "name": "Jane Smith",
+      "dob": "1992-03-22",
+      "insurance_id": "INS-67890",
+      "insurance_provider": "MediCare",
+      "contact": "+1 876 543 210",
+      "email": "jane.smith@example.com",
+      "address": "456 Oak St, LA, USA",
+      "medical_history": ["Asthma"]
+    },
+    {
+      "patient_id": "P003",
+      "name": "Michael Johnson",
+      "dob": "1978-11-10",
+      "insurance_id": "INS-54321",
+      "insurance_provider": "WellHealth",
+      "contact": "+1 987 654 321",
+      "email": "michael.johnson@example.com",
+      "address": "789 Pine St, TX, USA",
+      "medical_history": ["High Cholesterol", "Arthritis"]
+    },
+    {
+      "patient_id": "P004",
+      "name": "Emily Davis",
+      "dob": "2000-07-05",
+      "insurance_id": "INS-11111",
+      "insurance_provider": "LifeCare",
+      "contact": "+1 321 654 987",
+      "email": "emily.davis@example.com",
+      "address": "951 Maple St, FL, USA",
+      "medical_history": ["Migraine"]
+    }
+  ]
+  

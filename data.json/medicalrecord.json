@@ -1,0 +1,33 @@
+[
+    {
+      "record_id": "MR001",
+      "patient_id": "P001",
+      "hospital_id": "HOSP001",
+      "doctor": "Dr. Alice Smith",
+      "diagnosis": "Fractured Arm",
+      "treatment": ["X-ray", "Cast Application"],
+      "prescription": ["Painkillers", "Calcium Supplements"],
+      "date": "2025-02-20"
+    },
+    {
+      "record_id": "MR002",
+      "patient_id": "P002",
+      "hospital_id": "HOSP002",
+      "doctor": "Dr. Robert Brown",
+      "diagnosis": "Severe Asthma Attack",
+      "treatment": ["Oxygen Therapy", "Inhalers"],
+      "prescription": ["Salbutamol", "Steroids"],
+      "date": "2025-01-15"
+    },
+    {
+      "record_id": "MR003",
+      "patient_id": "P003",
+      "hospital_id": "HOSP003",
+      "doctor": "Dr. Lisa White",
+      "diagnosis": "High Cholesterol",
+      "treatment": ["Dietary Plan", "Lipid Panel Test"],
+      "prescription": ["Atorvastatin"],
+      "date": "2024-12-10"
+    }
+  ]
+  
