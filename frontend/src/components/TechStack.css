@@ -1,0 +1,31 @@
+.tech-stack-section {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+  }
+  
+  .hackathon-badge {
+    font-size: 1rem;
+    padding: 8px 15px;
+  }
+  
+  .tech-card {
+    transition: transform 0.3s ease-in-out;
+    text-align: center;
+    border-radius: 10px;
+  }
+  
+  .tech-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .tech-logo {
+    width: 60px;
+    height: 60px;
+    margin: auto;
+  }
+  
+  .tech-name {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
