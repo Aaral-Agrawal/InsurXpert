@@ -13,7 +13,7 @@ import TechStack from "../components/TechStack";
 import FAQs from "../components/FAQs";  
 import Footer from "../components/Footer";  
 import HowItWorks from "../components/HowItWorks";
-
+git 
 const Home = () => {
   // ✅ State for controlling the modal
   const [showModal, setShowModal] = useState(false);
