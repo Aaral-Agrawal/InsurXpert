@@ -8,6 +8,7 @@ import "aos/dist/aos.css";
 // Importing Components
 import LiveDemo from "./components/LiveDemo";
 import InsuranceDashboard from "./components/InsuranceDashboard";
+import ClaimOutput from "./pages/ClaimOutput"; 
 
 const Home = () => {
   return (
@@ -30,6 +31,7 @@ function App() {
       <Route path="/" element={<Home />} />
         <Route path="/LiveDemo" element={<LiveDemo />} />
         <Route path="/insurance-dashboard" element={<InsuranceDashboard />} />
+        <Route path="/claim-output" element={<ClaimOutput />} />
       </Routes>
     </Router>
   );
