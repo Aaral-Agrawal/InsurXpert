@@ -3,9 +3,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { motion } from "framer-motion";
+import "./InstantAccess.css";
 
-// Temporary placeholder image
-const accessImage = "https://via.placeholder.com/500";
+// ✅ Use the new image path
+const accessImage = "/instant.jpeg";
 
 const InstantAccess = () => {
   useEffect(() => {
@@ -17,7 +19,15 @@ const InstantAccess = () => {
       <Row className="align-items-center">
         {/* Left Side: Image */}
         <Col md={6} data-aos="fade-right">
-          <img src={accessImage} alt="Instant Access" className="img-fluid rounded shadow" />
+        <motion.img
+            src={accessImage}
+            alt="Instant Access"
+            className="img-fluid rounded shadow custom-img"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+            whileHover={{ scale: 1.1 }} // ✅ Add hover effect
+            />
         </Col>
 
         {/* Right Side: Content */}
@@ -35,4 +45,4 @@ const InstantAccess = () => {
 };
 
 export default InstantAccess;
-
+ 

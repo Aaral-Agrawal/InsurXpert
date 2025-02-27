@@ -1,0 +1,12 @@
+.custom-img {
+    max-width: 100%; /* Make sure image is responsive */
+    width: 80%; /* Increase image size */
+    height: auto;
+    transition: transform 0.5s ease-in-out; /* Smooth animation */
+  }
+  
+  /* Optional: Add a hover effect */
+  .custom-img:hover {
+    transform: scale(1.1);
+  }
+  

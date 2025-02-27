@@ -1,0 +1,19 @@
+.hero-section {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #002244, #004488); /* Dark blue gradient */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  /* ✅ Styling for InsurXpert in the Top-Left Corner */
+  .insurxpert-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 10px;
+  }

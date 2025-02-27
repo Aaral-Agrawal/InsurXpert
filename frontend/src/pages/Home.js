@@ -1,74 +1,69 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
-import "./HeroSection.css"; // Custom CSS for styling
-import "./HowItWorks.css";
+import "../components/HeroSection.css";
+import "../components/HowItWorks.css";
+import "../pages/Home.css";
+
 import InstantAccess from "../components/InstantAccess";  
 import LiveDemo from "../components/LiveDemo";  // ✅ Import the LiveDemo component
 import Testimonials from "../components/Testimonials";
 import TechStack from "../components/TechStack"; 
+import FAQs from "../components/FAQs";  // ✅ Import FAQs component
+import Footer from "../components/Footer";  // ✅ Import Footer
+import { motion } from "framer-motion";
+import HowItWorks from "../components/HowItWorks";
+
+
 
 const Home = () => {
-  const steps = [
-    {
-      title: "Upload Medical Records",
-      description: "Patients securely store their medical documents with end-to-end encryption.",
-      icon: "📤",
-    },
-    {
-      title: "AI-Powered Verification",
-      description: "AI detects fraud & speeds up claims by analyzing medical records.",
-      icon: "🤖",
-    },
-    {
-      title: "Instant Access for Insurers",
-      description: "Insurance companies access verified records instantly, reducing paperwork.",
-      icon: "⏳",
-    },
-    {
-      title: "Smart Contract Payouts",
-      description: "Blockchain smart contracts automate payouts, ensuring zero delays.",
-      icon: "⚡",
-    },
-  ];
-
+  
   return (
     <>
-      {/* Hero Section */}
-      <section className="hero-section text-center d-flex align-items-center">
-        <Container>
-          <Row className="justify-content-center">
-            <Col md={8}>
-              <h1 className="hero-title">Revolutionizing Health Insurance with AI & Blockchain</h1>
-              <p className="hero-subtitle">
-                Faster Claims. Transparent Process. Zero Fraud.
-              </p>
-              <div className="hero-buttons">
-                <Button variant="primary" size="lg" className="me-3">Get Started</Button>
-                <Button variant="outline-light" size="lg">Learn More</Button>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+       <Container fluid className="home-page">
+       <section className="hero-section text-center d-flex align-items-center position-relative">
+      {/* ✅ InsurXpert Logo in the Top-Left Corner */}
+      <div className="position-absolute top-0 start-0 p-3">
+        <h3 className="insurxpert-logo">InsurXpert</h3>
+      </div>
 
-      {/* How It Works Section */}
-      <Container className="how-it-works text-center py-5">
-        <h2 className="mb-4">How It Works</h2>
-        <Row>
-          {steps.map((step, index) => (
-            <Col md={6} lg={3} key={index} className="mb-4">
-              <Card className="h-100 shadow-sm p-3">
-                <div className="step-icon mb-3">{step.icon}</div>
-                <Card.Body>
-                  <Card.Title>{step.title}</Card.Title>
-                  <Card.Text>{step.description}</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
+      <Container>
+        <Row className="justify-content-center">
+          <Col md={8}>
+            {/* ✅ Animated Heading */}
+            <motion.h1
+              className="hero-title"
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+            >
+              Revolutionizing Health Insurance with AI & Blockchain
+            </motion.h1>
+
+            {/* ✅ Animated Subtitle */}
+            <motion.p
+              className="hero-subtitle"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+            >
+              Faster Claims. Transparent Process. Zero Fraud.
+            </motion.p>
+
+            <div className="hero-buttons">
+              <Button variant="primary" size="lg" className="me-3">Get Started</Button>
+              <Button variant="outline-light" size="lg">Learn More</Button>
+            </div>
+          </Col>
         </Row>
       </Container>
+    </section>
+
+       
+
+       {/* How It Works Section */}
+      <HowItWorks />
+
 
       {/* Instant Access Section */}
       <InstantAccess />
@@ -82,7 +77,11 @@ const Home = () => {
   
          <TechStack />
 
+         <FAQs />  {/* ✅ Add FAQs section here */}
 
+         <Footer />  {/* ✅ Add Footer here */}
+
+          </Container>
     </>
   );
 };
