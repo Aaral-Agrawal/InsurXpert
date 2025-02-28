@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col, Button, Modal, Form } from "react-bootstrap";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 import "../components/HeroSection.css";
 import "../components/HowItWorks.css";
@@ -14,8 +15,10 @@ import TechStack from "../components/TechStack";
 import FAQs from "../components/FAQs";  
 import Footer from "../components/Footer";  
 import HowItWorks from "../components/HowItWorks";
+
 const Home = () => {
   // ✅ State for controlling the modal
+  const navigate = useNavigate(); 
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -71,9 +74,10 @@ const Home = () => {
 
                 {/* ✅ Buttons */}
                 <div className="hero-buttons">
-                  <Button variant="primary" size="lg" className="me-3" onClick={() => setShowModal(true)}>
-                    Get Started
-                  </Button>
+                <Button variant="primary" size="lg" className="me-3" onClick={() => navigate("/login")}>
+                     Get Started
+                </Button>
+
                   <Button variant="outline-light" size="lg">Learn More</Button>
                 </div>
               </Col>

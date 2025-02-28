@@ -13,6 +13,8 @@ import PatientDetails from "./pages/PatientDetails";
 import LiveDemo from "./components/LiveDemo";
 import InsuranceDashboard from "./components/InsuranceDashboard";
 import ClaimOutput from "./pages/ClaimOutput";
+import Login from "./pages/Login";
+  
 
 const App = () => {
   useEffect(() => {
@@ -28,6 +30,8 @@ const App = () => {
       
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+ 
         <Route path="/patient-details" element={<PatientDetails />} />
         <Route path="/LiveDemo" element={<LiveDemo />} />
         <Route path="/insurance-dashboard" element={<InsuranceDashboard />} />
