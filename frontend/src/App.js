@@ -1,6 +1,3 @@
- 
-
-
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -14,7 +11,9 @@ import LiveDemo from "./components/LiveDemo";
 import InsuranceDashboard from "./components/InsuranceDashboard";
 import ClaimOutput from "./pages/ClaimOutput";
 import Login from "./pages/Login";
-  
+import Dashboard from "./pages/Dashboard";
+import ViewDetails from "./pages/ViewDetails";
+ 
 
 const App = () => {
   useEffect(() => {
@@ -31,7 +30,9 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
- 
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/view-details" element={<ViewDetails />} />
+         
         <Route path="/patient-details" element={<PatientDetails />} />
         <Route path="/LiveDemo" element={<LiveDemo />} />
         <Route path="/insurance-dashboard" element={<InsuranceDashboard />} />

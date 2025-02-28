@@ -49,6 +49,26 @@ const Home = () => {
             <h3 className="insurxpert-logo">InsurXpert</h3>
           </div>
 
+          {/* ✅ View Details Button in the Top-Right Corner */}
+      {/* <div>
+      <Button 
+        variant="primary" 
+        className="position-absolute top-0 end-0 m-3"
+        onClick={() => navigate("/view-details")}
+      >
+        View Details
+      </Button>
+      </div> */}
+
+<Button 
+  variant="primary" 
+  className="position-absolute top-0 end-0 m-3"
+  onClick={() => window.location.href = "/view-details"}  // Direct open karega
+>
+  View Details
+</Button>
+
+
           <Container className="mt-5 p-4 shadow-lg rounded">
             <Row className="justify-content-center">
               <Col md={8}>
