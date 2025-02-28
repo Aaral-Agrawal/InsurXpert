@@ -1,13 +1,22 @@
+ 
+
+
 import React, { useState, useEffect } from "react";
-import { Button, Form, Spinner, Alert } from "react-bootstrap";
+import { Button, Form, Spinner, Modal } from "react-bootstrap";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import "./CursorAnimation.css";
+import { useNavigate } from "react-router-dom";
 
 const LiveDemo = () => {
-  const [showForm, setShowForm] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [claimStatus, setClaimStatus] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [claimApproved, setClaimApproved] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState({ top: 0, left: 0, visible: false });
+  const navigate = useNavigate();
+
   const [patientDetails, setPatientDetails] = useState({
     name: "",
     age: "",
@@ -21,104 +30,103 @@ const LiveDemo = () => {
     AOS.init({ duration: 1200 });
   }, []);
 
-  const handleInputChange = (e) => {
-    setPatientDetails({ ...patientDetails, [e.target.name]: e.target.value });
+  const autoFillDetails = () => {
+    setShowModal(true);
+    const details = {
+      name: "John Doe",
+      age: "32",
+      condition: "Fractured Leg",
+      claimAmount: "5000",
+      hospital: "City Hospital",
+      insuranceId: "INS12345"
+    };
+    
+    const fields = Object.keys(details);
+    fields.forEach((field, index) => {
+      setTimeout(() => {
+        setPatientDetails((prev) => ({ ...prev, [field]: details[field] }));
+      }, index * 500);
+    });
+    
+    setTimeout(() => moveCursorToSubmit(), fields.length * 500 + 1000);
   };
 
-  // ✅ Claim Submission
+  const moveCursorToSubmit = () => {
+    setCursorPosition({ top: 400, left: 200, visible: true });
+    setTimeout(() => submitClaim(), 1000);
+  };
+
   const submitClaim = () => {
     setIsProcessing(true);
-    setClaimStatus("Processing claim...");
-
     setTimeout(() => {
       setIsProcessing(false);
       setSubmitted(true);
-      setClaimStatus("Claim Approved! ✅ Your payout will be processed soon.");
+      setClaimApproved(true);
+      setTimeout(() => autoProceedWithClaim(), 2000);
     }, 3000);
+  };
+
+  const autoProceedWithClaim = () => {
+    setCursorPosition({ top: 500, left: 250, visible: true });
+    setTimeout(() => {
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowModal(false);
+        navigate("/");
+      }, 2000);
+    }, 1000);
   };
 
   return (
     <div className="container mt-4 text-center">
-      {/* Try Live Demo Button (Centered) */}
-      {!showForm && !submitted && (
-        <div className="d-flex justify-content-center">
-          <Button variant="primary" className="m-3" onClick={() => setShowForm(true)}>
-            Try Live Demo
-          </Button>
-        </div>
+      {!showModal && (
+        <Button variant="primary" onClick={autoFillDetails}>Try Live Demo</Button>
       )}
 
-      {/* Form Section */}
-      {showForm && !submitted && (
-        <div className="mt-5" data-aos="fade-up">
-          <h2 className="fw-bold text-primary">Enter Your Details</h2>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Enter Patient Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {!submitted ? (
+            <Form>
+              {Object.keys(patientDetails).map((key) => (
+                <Form.Group key={key} className="mb-3">
+                  <Form.Label>{key.replace(/([A-Z])/g, " $1").trim()}</Form.Label>
+                  <Form.Control type="text" value={patientDetails[key]} readOnly />
+                </Form.Group>
+              ))}
+              <div className="text-center">
+                <Button variant="primary" disabled>
+                  {isProcessing ? <Spinner animation="border" size="sm" /> : "Submit"}
+                </Button>
+              </div>
+            </Form>
+          ) : (
+            <div className="text-center">
+              <h4 className="text-success">Claim Approved! ✅</h4>
+              <p>Your payout will be processed soon.</p>
+              <h5>Patient Details</h5>
+              {Object.keys(patientDetails).map((key) => (
+                <p key={key}><strong>{key.replace(/([A-Z])/g, " $1").trim()}:</strong> {patientDetails[key]}</p>
+              ))}
+              <p><strong>Policy Status:</strong> ✅ Policy Verified</p>
+              <div className="mt-3">
+                <Button variant="danger">Cancel Claim</Button>{" "}
+                <Button variant="success" disabled>Proceed with Claim</Button>
+              </div>
+              {showSuccess && (
+                <div className="mt-4 text-success fw-bold" data-aos="fade-up">
+                  ✅ Funds Credited Successfully!
+                </div>
+              )}
+            </div>
+          )}
+        </Modal.Body>
+      </Modal>
 
-          <Form className="d-flex flex-wrap justify-content-center gap-3">
-            <Form.Group>
-              <Form.Label>Patient Name</Form.Label>
-              <Form.Control type="text" name="name" value={patientDetails.name} onChange={handleInputChange} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Age</Form.Label>
-              <Form.Control type="number" name="age" value={patientDetails.age} onChange={handleInputChange} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Medical Condition</Form.Label>
-              <Form.Control type="text" name="condition" value={patientDetails.condition} onChange={handleInputChange} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Claim Amount</Form.Label>
-              <Form.Control type="number" name="claimAmount" value={patientDetails.claimAmount} onChange={handleInputChange} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Hospital Details</Form.Label>
-              <Form.Control type="text" name="hospital" value={patientDetails.hospital} onChange={handleInputChange} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Insurance ID</Form.Label>
-              <Form.Control type="text" name="insuranceId" value={patientDetails.insuranceId} onChange={handleInputChange} />
-            </Form.Group>
-          </Form>
-
-          {/* Submit Claim Button */}
-          <div className="d-flex justify-content-center mt-4">
-            <Button variant="info" onClick={submitClaim} disabled={isProcessing}>
-              {isProcessing ? <Spinner animation="border" size="sm" /> : "Submit Claim"}
-            </Button>
-          </div>
-        </div>
-      )}
-
-      {/* ✅ Claim Output Section (After Form Submission) */}
-      {submitted && (
-        <div className="mt-5" data-aos="fade-up">
-          <h2 className="fw-bold text-success">Claim Approved! ✅</h2>
-          <p className="lead">Your payout will be processed soon.</p>
-
-          <div className="mt-4">
-            <h4>Patient Details</h4>
-            <p><strong>Name:</strong> {patientDetails.name}</p>
-            <p><strong>Age:</strong> {patientDetails.age}</p>
-            <p><strong>Condition:</strong> {patientDetails.condition}</p>
-            <p><strong>Claim Amount:</strong> ${patientDetails.claimAmount}</p>
-            <p><strong>Hospital:</strong> {patientDetails.hospital}</p>
-            <p><strong>Insurance ID:</strong> {patientDetails.insuranceId}</p>
-            <p><strong>Policy Status:</strong> ✅ Policy Verified</p>
-          </div>
-
-          <div className="mt-4">
-            <Button variant="danger" onClick={() => setSubmitted(false)}>
-              Cancel Claim
-            </Button>{" "}
-            <Button variant="success" onClick={() => alert("Funds Credited Successfully!")}> 
-              Proceed with Claim
-            </Button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
 
 export default LiveDemo;
- 
