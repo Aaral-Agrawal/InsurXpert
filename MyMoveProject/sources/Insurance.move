@@ -29,6 +29,13 @@
         is_active: bool,
     }
 
+    struct RejectedClaim has key {
+        policy_holder: address,
+        amount: u64,
+        reason: u64, // Example: 101 = Fraud, 102 = Incomplete Docs, etc.
+    }
+
+
     
     struct Claim has key, store {
         policy_holder: address,
@@ -39,8 +46,10 @@
     }
 
 	public entry fun deposit(account: &signer, amount: u64) {
-        let sender = signer::address_of(account);
-        coin::transfer<aptos_coin::AptosCoin>(sender,0xbc67c6ba329ef528a1a95a501042cac6094bf3e1fa68f75f44bbfbf7ac131027, amount);
+        let contract_address: address = @0xbc67c6ba329ef528a1a95a501042cac6094bf3e1fa68f75f44bbfbf7ac131027;
+    
+        coin::transfer<aptos_coin::AptosCoin>(account, contract_address, amount);
+         
     }
 
 
@@ -49,10 +58,11 @@
         account: &signer,
         amount: u64,
         documents_hash: vector<u8>
-    ) acquires Claim, Policy  {
+    ) acquires Policy {
 		let user = signer::address_of(account);
 
-        assert!(!exists<Policy>(user),108); 
+       
+        
          
 		// If no policy exists, create a new one with default values
     	if (!exists<Policy>(user)) {
@@ -63,7 +73,7 @@
             is_active: true,
             }; 
         	move_to(account, new_policy);
-        }   
+        }; 
 
     	let policy = borrow_global<Policy>(user);
 		
@@ -93,8 +103,8 @@
     }
 
     public entry fun approve_claim(_account: &signer, policy_holder: address, policy_valid: bool)acquires Claim , Admin {
-	    let admin = borrow_global<Admin>(signer::address_of(account));
-	    assert!(signer::address_of(account) == admin.admin_address, 201); // Only 	Admin can approve
+	    let admin = borrow_global<Admin>(signer::address_of(_account));
+	    assert!(signer::address_of(_account) == admin.admin_address, 201); // Only 	Admin can approve
 
 	    assert!(exists<Claim>(policy_holder), 102);
         let claim_ref = borrow_global_mut<Claim>(policy_holder);
@@ -132,29 +142,44 @@
         // Check if the claim is approved before withdrawing
         assert!(claim.status, 105);
 
+        let contract_address: address = @0xbc67c6ba329ef528a1a95a501042cac6094bf3e1fa68f75f44bbfbf7ac131027;
+
         // Get the contract's balance
-        let contract_balance = coin::balance<aptos_coin::AptosCoin>(0xbc67c6ba329ef528a1a95a501042cac6094bf3e1fa68f75f44bbfbf7ac131027);
+        let contract_balance = coin::balance<aptos_coin::AptosCoin>(contract_address);
 
 	    // Ensure there are enough funds to pay the claim
         assert!(contract_balance >= claim.amount, 106); // Error 106 = Insufficient funds
 
 	  
         // Transfer funds from the contract to the policyholder
-        coin::transfer<aptos_coin::AptosCoin>(0xbc67c6ba329ef528a1a95a501042cac6094bf3e1fa68f75f44bbfbf7ac131027, user, claim.amount);
+        coin::transfer<aptos_coin::AptosCoin>(account, user, claim.amount);
 
         // Mark claim as settled
         claim.amount = 0;
         claim.status = false;  // Mark claim as settled
     }
 
-    public entry fun reject_claim(account: &signer, policy_holder: address) acquires Claim, Admin {
-	    let admin = borrow_global<Admin>(signer::address_of(account));
-        assert!(!signer::address_of(account) == admin.admin_address, 202); // Only 	Admin can reject
-  
-        assert!(exists<Claim>(policy_holder), 106);
+     public entry fun reject_claim(account: &signer, policy_holder: address, reason: u64) acquires Claim, Admin {
+    let admin = borrow_global<Admin>(signer::address_of(account));
 
-        // Delete the claim
-        move_from<Claim>(policy_holder);
+    // Ensure only Admin can reject
+    assert!(signer::address_of(account) == admin.admin_address, 202);
+    assert!(exists<Claim>(policy_holder), 106);
+
+      // Move the claim from storage and fully deconstruct it
+    let Claim { policy_holder: holder, amount, status, documents_hash, policy_valid } = move_from<Claim>(policy_holder);
+
+    
+
+    // Store rejected claim details
+    let rejected_claim = RejectedClaim { 
+        policy_holder: policy_holder, 
+        amount: amount,   
+        reason: reason  
+    };
+
+    move_to(account, rejected_claim);
     }
+
 }
 
