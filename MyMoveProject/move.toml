@@ -8,6 +8,6 @@ license = "MIT"
 AptosFramework = {  git = "https://github.com/aptos-labs/aptos-core.git", rev = "main", subdir = "aptos-move/framework/aptos-framework"}
 
 [addresses]
-InsurXpert = "0x1"
-MyMoveProject = "0x2"
+InsurXpert = "0x8ced79a526b0e568295c84892d8e3e48929236c91269a16991f5f4bbc64a0bf6"
+MyMoveProject = "0x8ced79a526b0e568295c84892d8e3e48929236c91269a16991f5f4bbc64a0bf6"
 
