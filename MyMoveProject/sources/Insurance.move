@@ -39,7 +39,7 @@ module InsurXpert::Insurance {
 
 	public entry fun deposit(account: &signer, amount: u64) {
         let sender = signer::address_of(account);
-        coin::transfer<aptos_coin::AptosCoin>(sender, @0x8ced79a526b0e568295c84892d8e3e48929236c91269a16991f5f4bbc64a0bf6, amount);
+        coin::transfer<aptos_coin::AptosCoin>(sender, 0xbc67c6ba329ef528a1a95a501042cac6094bf3e1fa68f75f44bbfbf7ac131027, amount);
     }
 
 
@@ -130,14 +130,14 @@ public entry fun withdraw_claim(account: &signer) acquires Claim {
     assert!(claim.status, 105);
 
     // Get the contract's balance
-    let contract_balance = coin::balance<aptos_coin::AptosCoin>(@		0x8ced79a526b0e568295c84892d8e3e48929236c91269a16991f5f4bbc64a0bf6);
+    let contract_balance = coin::balance<aptos_coin::AptosCoin>(0xbc67c6ba329ef528a1a95a501042cac6094bf3e1fa68f75f44bbfbf7ac131027);
 
 	 // Ensure there are enough funds to pay the claim
     assert!(contract_balance >= claim.amount, 106); // Error 106 = Insufficient           funds
 
 	  
     // Transfer funds from the contract to the policyholder
-    coin::transfer<aptos_coin::AptosCoin>(0x8ced79a526b0e568295c84892d8e3e48929236c91269a16991f5f4bbc64a0bf6, user, claim.amount);
+    coin::transfer<aptos_coin::AptosCoin>(0xbc67c6ba329ef528a1a95a501042cac6094bf3e1fa68f75f44bbfbf7ac131027, user, claim.amount);
 
       // Mark claim as settled
     claim.amount = 0;
