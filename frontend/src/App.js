@@ -13,6 +13,7 @@ import ClaimOutput from "./pages/ClaimOutput";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ViewDetails from "./pages/ViewDetails";
+import Navbar from "./pages/Navbar";
  
 
 const App = () => {
@@ -21,7 +22,16 @@ const App = () => {
   }, []);
 
   return (
+  
     <Router>
+            {/* ✅ Navbar ko Routes se pehle include kiya */}
+            <Navbar />
+
+<div className="container text-center mt-3">
+  <h1 data-aos="fade-down">Welcome to InsurXpert</h1>
+  <p data-aos="fade-up">Your AI & Blockchain-powered insurance platform</p>
+</div>
+
       <div className="container text-center mt-3">
         <h1 data-aos="fade-down">Welcome to InsurXpert</h1>
         <p data-aos="fade-up">Your AI & Blockchain-powered insurance platform</p>

@@ -80,7 +80,7 @@ const LiveDemo = () => {
   return (
     <div className="container mt-4 text-center">
       {!showModal && (
-        <Button variant="primary" onClick={autoFillDetails}>Try Live Demo</Button>
+        <Button variant="primary" onClick={autoFillDetails}>How It Works</Button>
       )}
 
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>

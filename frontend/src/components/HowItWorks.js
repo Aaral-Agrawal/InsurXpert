@@ -13,8 +13,8 @@ export const steps = [
   },
   {
     
-      title: "AI-Powered Verification",
-      description: "AI detects fraud & speeds up claims by analyzing medical records.",
+      title: "Aptos Blockchain ",
+      description: " Aptos Blockchain detects fraud & speeds up claims by analyzing medical records.",
       icon: <img src="https://cdn3d.iconscout.com/3d/premium/thumb/ai-brain-3d-icon-download-in-png-blend-fbx-gltf-file-formats--artificial-intelligence-robotics-chip-mind-pack-science-technology-icons-7718457.png?f=webp" 
               alt="AI Brain Icon" width="50" />,
     

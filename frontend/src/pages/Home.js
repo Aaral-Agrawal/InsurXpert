@@ -15,6 +15,8 @@ import TechStack from "../components/TechStack";
 import FAQs from "../components/FAQs";  
 import Footer from "../components/Footer";  
 import HowItWorks from "../components/HowItWorks";
+import { Navbar, Nav } from "react-bootstrap";
+
 
 const Home = () => {
   // ✅ State for controlling the modal
@@ -42,6 +44,7 @@ const Home = () => {
 
   return (
     <>
+    <div className="d-flex justify-content-between align-items-center px-4 w-100 position-absolute top-0 start-0 end-0"></div>
       <Container fluid className="home-page">
         <section className="hero-section text-center d-flex align-items-center position-relative">
           {/* ✅ InsurXpert Logo */}
@@ -60,6 +63,29 @@ const Home = () => {
       </Button>
       </div> */}
 
+
+      {/* Navigation Bar in the Center */}
+     
+
+  {/* <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.5 }}
+    className="position-absolute start-50 translate-middle-x"
+  >
+    <Navbar bg="transparent">
+      <Nav className="mx-auto">
+        <Nav.Link href="#contact" className="text-white mx-3">Contact Us</Nav.Link>
+        <Nav.Link href="#help" className="text-white mx-3">Help</Nav.Link>
+        <Nav.Link href="/login" className="text-white mx-3">Login</Nav.Link>
+        <Nav.Link href="#about" className="text-white mx-3">About</Nav.Link>
+      </Nav>
+    </Navbar>
+  </motion.div> */}
+    
+           
+ {/* View Details Button */}
+ <div>
 <Button 
   variant="primary" 
   className="position-absolute top-0 end-0 m-3"
@@ -67,8 +93,7 @@ const Home = () => {
 >
   View Details
 </Button>
-
-
+</div>
           <Container className="mt-5 p-4 shadow-lg rounded">
             <Row className="justify-content-center">
               <Col md={8}>

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col} from "react-bootstrap";
 import { motion } from "framer-motion";
 import "./InstantAccess.css";
 
@@ -32,12 +32,15 @@ const InstantAccess = () => {
 
         {/* Right Side: Content */}
         <Col md={6} data-aos="fade-left">
-          <h2 className="mb-4">Instant Access for Insurers</h2>
-          <p className="text-muted">
-            Insurance companies instantly access verified records without needing physical paperwork.
-          </p>
-          <Button variant="primary" className="me-3">Get Started</Button>
-          <Button variant="outline-secondary">Learn More</Button>
+          <h2 className="mb-4">With InsurXpert,no more hassles & no more worries </h2>
+          <h6 style={{color:"white", fontWeight:"bold"}}>
+          InsurXpert is an blockchain-powered platform that makes health insurance claims faster and fraud-proof.
+
+          Patients securely upload medical records to a tamper-proof blockchain, allowing instant access for insurers.  verification ensures authenticity, reducing fraud and delays.
+
+          Smart contracts automate claim approvals and payouts, creating a paperless, secure, and efficient insurance system.
+          </h6>
+           
         </Col>
       </Row>
     </Container>

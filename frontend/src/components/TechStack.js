@@ -10,7 +10,7 @@ const TechStack = () => {
       <Row>
         <Col><Card className="p-3">🔥 Firebase</Card></Col>
         <Col><Card className="p-3">🟢 Aptos</Card></Col>
-        <Col><Card className="p-3">🤖 AI Models</Card></Col>
+        <Col><Card className="p-3">🤖 Blockchain</Card></Col>
       </Row>
     </Container>
   );

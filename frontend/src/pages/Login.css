@@ -57,3 +57,40 @@
     height: auto; /* Adjust height dynamically */
     max-height: 600px; /* Set a max height */
   }
+
+  /* Message Box */
+.message-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  width: 300px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Dashboard Button */
+.dashboard-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.dashboard-btn:hover {
+  background-color: #1e7e34;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
