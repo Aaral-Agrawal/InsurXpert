@@ -1,17 +1,36 @@
  module InsurXpert::Insurance {
-     use std::signer;
-	// Import Aptos Coin module for fund transfers
+    use std::signer;
 	use aptos_framework::coin;
 	use aptos_framework::aptos_coin;
+    use std::vector;
+    use std::table;
+    use aptos_framework::event;
+    use aptos_framework::guid;
+
 
 
     struct Admin has key, store {
-    	admin_address: address,
+    	admin_address:address,
+        event_handle: event::EventHandle<ClaimRejectedEvent>,
+    }
+
+    struct InsuranceCompany has key, store {
+        policies: table::Table<address, Policy>,
+    }
+
+    struct ClaimRejectedEvent has store, drop {
+        policy_holder: address,
+        reason: u64,
+    }
+
+    struct PolicyNotFoundEvent has store, drop {
+        user: address,
     }
 
     public entry fun initialize_admin(account: &signer) {
         let admin = Admin {
             admin_address: signer::address_of(account),
+            event_handle: event::new_event_handle<ClaimRejectedEvent>(account,guid::create(account)),
         };
     	move_to(account, admin);
     }
@@ -27,6 +46,8 @@
         premium: u64,
         coverage_amount: u64,
         is_active: bool,
+        documents_hashes: vector<vector<u8>>,
+         claims: table::Table<u64, Claim>,
     }
 
     struct RejectedClaim has key {
@@ -45,6 +66,18 @@
         policy_valid: bool,          // Ensures it meets policy terms
     }
 
+    public fun emit_claim_rejected_event(policy_holder: address, reason: u64) acquires Admin {
+        let admin = borrow_global_mut<Admin>(@0xa7cea1a496a47b3b5d76818a01dd7a519526fc6190b5407f7d41335727c69f8a);
+        event::emit_event(&mut admin.event_handle, ClaimRejectedEvent { policy_holder, reason });
+    }
+
+    public fun emit_policy_not_found_event(user: address) acquires Admin {
+        let admin = borrow_global_mut<Admin>(@0xa7cea1a496a47b3b5d76818a01dd7a519526fc6190b5407f7d41335727c69f8a);
+        let event = PolicyNotFoundEvent { user };
+        event::emit_event(&mut admin.event_handle, ClaimRejectedEvent { policy_holder, reason });
+
+    }
+
 	public entry fun deposit(account: &signer, amount: u64) {
         let contract_address: address = @0xbc67c6ba329ef528a1a95a501042cac6094bf3e1fa68f75f44bbfbf7ac131027;
     
@@ -52,28 +85,44 @@
          
     }
 
+    public entry fun initialize_demo_companies(account: &signer) acquires InsuranceCompany {
+    let company1_address = @0xa9a178f1185ef0182642b165d2af5ac55b931f15aab3f1c1a8bdc2cb4e048e0c; 
+    let company2_address = @0xbc9761f4588ceec788e1e10719f311f9c351103210e4e5640440ae444292c1a4; 
+
+    // Ensure these companies are not already registered
+    if (!exists<InsuranceCompany>(company1_address)) {
+        let company1 = InsuranceCompany {
+            policies: table::new<address, Policy>(),
+        };
+        move_to(account, company1);
+    };
+
+    if (!exists<InsuranceCompany>(company2_address)) {
+        let company2 = InsuranceCompany {
+            policies: table::new<address, Policy>(),
+        };
+        move_to(account, company2);
+    }
+}
+
+
 
     public entry fun submit_claim(      
         // User must have a policy
         account: &signer,
         amount: u64,
         documents_hash: vector<u8>
-    ) acquires Policy {
+    ) acquires Policy,Claim {
 		let user = signer::address_of(account);
 
-       
+		if (!exists<Policy>(user)) {
+            emit_policy_not_found_event(user);
+            return;
+        };
+
         
-         
-		// If no policy exists, create a new one with default values
-    	if (!exists<Policy>(user)) {
-            let new_policy = Policy {
-            policy_holder: user,
-            premium: 500, // Default premium amount
-            coverage_amount: 10000, // Default coverage
-            is_active: true,
-            }; 
-        	move_to(account, new_policy);
-        }; 
+        assert!(!table::contains(&borrow_global<Policy>(user).claims, 1), 109);
+
 
     	let policy = borrow_global<Policy>(user);
 		
@@ -84,9 +133,6 @@
     	// Ensure claim amount does not exceed coverage
     	assert!(amount <= policy.coverage_amount, 108);
 
-		
-        // Prevent multiple claims at once
-        assert!(!exists<Claim>(user), 109); 
 
         // Basic validation: claim amount must be greater than 0
         assert!(amount > 0, 100);  
@@ -102,25 +148,74 @@
         move_to(account, claim);
     }
 
-    public entry fun approve_claim(_account: &signer, policy_holder: address, policy_valid: bool)acquires Claim , Admin {
-	    let admin = borrow_global<Admin>(signer::address_of(_account));
-	    assert!(signer::address_of(_account) == admin.admin_address, 201); // Only 	Admin can approve
+    public entry fun register_policy(
+        insurer: &signer, 
+        user: address, 
+        policy_id: u64, 
+        coverage: u64
+    ) acquires InsuranceCompany {
+            let insurer_address = signer::address_of(insurer);
 
-	    assert!(exists<Claim>(policy_holder), 102);
+            // Ensure insurer sirf demo companies me se koi ek ho
+            assert!(insurer_address == @0xa9a178f1185ef0182642b165d2af5ac55b931f15aab3f1c1a8bdc2cb4e048e0c 
+                || insurer_address == @0xbc9761f4588ceec788e1e10719f311f9c351103210e4e5640440ae444292c1a4, 301);
+
+            let insurance_company = borrow_global_mut<InsuranceCompany>(insurer_address);
+            assert!(!table::contains(&insurance_company.policies, user), 201);
+
+            let policy = Policy {
+                policy_holder: user,
+                premium: 100, 
+                documents_hashes: vector::empty(),
+                coverage_amount: coverage,
+                is_active: true,
+                claims: table::new<u64, Claim>(),
+            };
+
+            table::add(&mut insurance_company.policies, user, policy);
+    }
+
+    public entry fun approve_claim(
+        insurer: &signer,
+        policy_holder: address,
+        policy_valid: bool
+    ) acquires Claim, InsuranceCompany {
+        let insurer_address = signer::address_of(insurer);
+        // Ensure sirf demo insurance company approve kare
+        assert!(insurer_address == @0xa9a178f1185ef0182642b165d2af5ac55b931f15aab3f1c1a8bdc2cb4e048e0c 
+        || insurer_address == @0xbc9761f4588ceec788e1e10719f311f9c351103210e4e5640440ae444292c1a4, 302);
+
+
+        let insurance_company = borrow_global_mut<InsuranceCompany>(insurer_address);
+        assert!(table::contains(&insurance_company.policies, policy_holder), 108);
+        
         let claim_ref = borrow_global_mut<Claim>(policy_holder);
-
-	    // Check if policy is valid before approving
         claim_ref.policy_valid = policy_valid;
-
-
-        // Set policy validation status
+        
         if (policy_valid) {
             claim_ref.status = true;
         }
     }
 
+    public entry fun verify_documents(
+        insurer: &signer,
+        user: address,
+        doc_hash: vector<u8>
+    ) acquires InsuranceCompany {
+        let insurance_company = borrow_global<InsuranceCompany>(signer::address_of(insurer));
+        if (!table::contains(&insurance_company.policies, user)) {
+            emit_policy_not_found_event(user);
+            return;
+        };
+
+        let policy = table::borrow(&insurance_company.policies, user);
+        if (!vector::contains(&policy.documents_hashes, &doc_hash)) {
+            emit_claim_rejected_event(user, 102);
+        }
+    }
+
     public fun get_policy_data(policy_holder: address): Claim acquires Claim {
-        assert!(!exists<Claim>(policy_holder), 103);
+        assert!(exists<Policy>(policy_holder), 103);
         let claim = borrow_global<Claim>(policy_holder);
         Claim {
             policy_holder: claim.policy_holder,
@@ -159,27 +254,57 @@
         claim.status = false;  // Mark claim as settled
     }
 
-     public entry fun reject_claim(account: &signer, policy_holder: address, reason: u64) acquires Claim, Admin {
-    let admin = borrow_global<Admin>(signer::address_of(account));
-
-    // Ensure only Admin can reject
-    assert!(signer::address_of(account) == admin.admin_address, 202);
-    assert!(exists<Claim>(policy_holder), 106);
-
-      // Move the claim from storage and fully deconstruct it
-    let Claim { policy_holder: holder, amount, status, documents_hash, policy_valid } = move_from<Claim>(policy_holder);
-
+    public entry fun reject_claim(insurer: &signer, policy_holder: address, reason: u64) acquires Claim, InsuranceCompany {
+         let insurer_address = signer::address_of(insurer);
     
+        // Ensure sirf demo companies reject karein
+        assert!(insurer_address == @0x123 || insurer_address == @0x456, 303);
+        
+        let insurance_company = borrow_global<InsuranceCompany>(insurer_address);
+        assert!(table::contains(&insurance_company.policies, policy_holder), 202);
 
-    // Store rejected claim details
-    let rejected_claim = RejectedClaim { 
-        policy_holder: policy_holder, 
-        amount: amount,   
-        reason: reason  
-    };
+        assert!(exists<Claim>(policy_holder), 106); 
 
-    move_to(account, rejected_claim);
+        // Move the claim from storage and fully deconstruct it
+        let Claim { policy_holder: holder, amount, status, documents_hash, policy_valid } = move_from<Claim>(policy_holder);
+
+        // Store rejected claim details
+        let rejected_claim = RejectedClaim { 
+            policy_holder: policy_holder, 
+            amount: amount,   
+            reason: reason  
+        };
+
+        move_to(insurer, rejected_claim);
+        emit_claim_rejected_event(policy_holder, reason);
     }
+
+    public fun get_policy(user: address): Policy acquires InsuranceCompany {
+        if (exists<InsuranceCompany>(@0xa9a178f1185ef0182642b165d2af5ac55b931f15aab3f1c1a8bdc2cb4e048e0c)) {
+            let insurance_company = borrow_global<InsuranceCompany>(@0xa9a178f1185ef0182642b165d2af5ac55b931f15aab3f1c1a8bdc2cb4e048e0c);
+            if (table::contains(&insurance_company.policies, user)) {
+                return *table::borrow(&insurance_company.policies, user);
+            }
+        };
+
+        if (exists<InsuranceCompany>(@0xbc9761f4588ceec788e1e10719f311f9c351103210e4e5640440ae444292c1a4)) {
+            let insurance_company = borrow_global<InsuranceCompany>(@0xbc9761f4588ceec788e1e10719f311f9c351103210e4e5640440ae444292c1a4);
+            if (table::contains(&insurance_company.policies, user)) {
+                return  *table::borrow(&insurance_company.policies, user);
+            }
+        };
+
+        return Policy {
+            policy_holder: @0x0,
+            premium: 0,
+            coverage_amount: 0,
+            is_active: false,
+            documents_hashes: vector::empty(),
+            claims: table::new<u64, Claim>(@0x0),
+        }; 
+    }
+
+
 
 }
 
