@@ -15,7 +15,7 @@ import TechStack from "../components/TechStack";
 import FAQs from "../components/FAQs";  
 import Footer from "../components/Footer";  
 import HowItWorks from "../components/HowItWorks";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav,container } from "react-bootstrap";
 
 
 const Home = () => {

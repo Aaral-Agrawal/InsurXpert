@@ -13,7 +13,7 @@ const LiveDemo = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [claimApproved, setClaimApproved] = useState(false);
+  const [claimApproved, setClaimApproved] = useState(false); 
   const [cursorPosition, setCursorPosition] = useState({ top: 0, left: 0, visible: false });
   const navigate = useNavigate();
 
