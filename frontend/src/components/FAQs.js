@@ -8,7 +8,8 @@ const FAQs = () => {
       <Container>
         <h2 className="text-center mb-4">FAQs (Common Questions)</h2>
         <Accordion>
-          {/* Question 1 */}
+          
+
           <Accordion.Item eventKey="0">
             <Accordion.Header>How does blockchain secure my data?</Accordion.Header>
             <Accordion.Body>
@@ -21,7 +22,7 @@ const FAQs = () => {
             </Accordion.Body>
           </Accordion.Item>
 
-          {/* Question 2 */}
+           
           <Accordion.Item eventKey="1">
             <Accordion.Header>How fast are claims processed?</Accordion.Header>
             <Accordion.Body>
@@ -34,7 +35,7 @@ const FAQs = () => {
             </Accordion.Body>
           </Accordion.Item>
 
-          {/* Question 3 */}
+          
           <Accordion.Item eventKey="2">
             <Accordion.Header>Is my data private?</Accordion.Header>
             <Accordion.Body>
@@ -47,7 +48,7 @@ const FAQs = () => {
             </Accordion.Body>
           </Accordion.Item>
 
-          {/* Question 4 */}
+           
           <Accordion.Item eventKey="3">
             <Accordion.Header>What makes InsurXpert different?</Accordion.Header>
             <Accordion.Body>
