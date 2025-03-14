@@ -4,16 +4,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-// Importing Pages and Components
+ 
 import Home from "./pages/Home";
 import PatientDetails from "./pages/PatientDetails";
 import LiveDemo from "./components/LiveDemo";
-import InsuranceDashboard from "./components/InsuranceDashboard";
-import ClaimOutput from "./pages/ClaimOutput";
+ 
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ViewDetails from "./pages/ViewDetails";
-import Navbar from "./pages/Navbar";
+ 
  
 
 const App = () => {
@@ -24,8 +23,8 @@ const App = () => {
   return (
   
     <Router>
-            {/* ✅ Navbar ko Routes se pehle include kiya */}
-            <Navbar />
+            
+           
 
 <div className="container text-center mt-3">
   <h1 data-aos="fade-down">Welcome to InsurXpert</h1>
@@ -45,8 +44,7 @@ const App = () => {
          
         <Route path="/patient-details" element={<PatientDetails />} />
         <Route path="/LiveDemo" element={<LiveDemo />} />
-        <Route path="/insurance-dashboard" element={<InsuranceDashboard />} />
-        <Route path="/claim-output" element={<ClaimOutput />} />
+        
       </Routes>
     </Router>
   );

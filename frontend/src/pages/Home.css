@@ -1,6 +1,7 @@
 .home-page {
-    background-color: #002244;  /* Pure dark blue background */
-    min-height: 100vh; /* Full page height */
-    color: white; /* Text color */
+    background-color: #002244; 
+    min-height: 100vh;  
+    color: white; 
+    padding: 0%;
   }
   
