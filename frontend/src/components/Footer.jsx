@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="footer-section bg-dark text-light py-4">
       <Container>
         <Row className="text-center">
-          {/* Quick Links */}
+           
           <Col md={4}>
             <h5>Quick Links</h5>
             <ul className="list-unstyled">
@@ -17,7 +17,7 @@ const Footer = () => {
             </ul>
           </Col>
 
-          {/* Social Media */}
+          
           <Col md={4}>
             <h5>Follow Us</h5>
             <ul className="list-unstyled">
@@ -27,7 +27,7 @@ const Footer = () => {
             </ul>
           </Col>
 
-          {/* Hackathon Link */}
+           
           <Col md={4}>
             <h5>Built for Hackathon</h5>
             <p><a href="https://hackathonwebsite.com" target="_blank" rel="noopener noreferrer" className="text-light">Check our Hackathon Submission</a></p>

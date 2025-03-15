@@ -1,6 +1,6 @@
 .hero-section {
     min-height: 100vh;
-    background: linear-gradient(135deg, #002244, #004488); /* Dark blue gradient */
+    background: linear-gradient(135deg, #002244, #004488);  
     color: white;
     display: flex;
     align-items: center;
@@ -8,7 +8,7 @@
     position: relative;
   }
   
-  /* ✅ Styling for InsurXpert in the Top-Left Corner */
+   
   .insurxpert-logo {
     font-size: 24px;
     font-weight: bold;

@@ -1,25 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
 .how-it-works {
-     background: linear-gradient(135deg, #002242  , #2f85dc); /*Dark blue gradient */
+     background: linear-gradient(135deg, #002242  , #2f85dc);  
    
-    color: rgb(247, 244, 244);  /* Ensure text is visible */
-    padding: 0px 0; /* Add some spacing */
+    color: rgb(247, 244, 244);   
+    padding: 0px 0; 
   }
   
   .how-it-works h2 {
-    color: #ffffff; /* Make heading white for contrast */
+    color: #ffffff;  
   }
   
   .card {
-    background: rgba(255, 255, 255, 0.1); /* Slight transparent background */
-    backdrop-filter: blur(5px); /* Soft blur effect */
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(5px);  
     border: none;
     color: white;
   }
   
   .step-icon img {
-    width: 50px; /* Ensure icons are properly sized */
+    width: 50px; 
   }
   
 .step-description {

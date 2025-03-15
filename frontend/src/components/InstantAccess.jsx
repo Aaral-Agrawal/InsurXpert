@@ -6,7 +6,7 @@ import { Container, Row, Col} from "react-bootstrap";
 import { motion } from "framer-motion";
 import "./InstantAccess.css";
 
-// ✅ Use the new image path
+ 
 const accessImage = "/instant.jpeg";
 
 const InstantAccess = () => {
@@ -17,7 +17,7 @@ const InstantAccess = () => {
   return (
     <Container className="instant-access-section py-5 text-center">
       <Row className="align-items-center">
-        {/* Left Side: Image */}
+ 
         <Col md={6} data-aos="fade-right">
         <motion.img
             src={accessImage}
@@ -26,11 +26,11 @@ const InstantAccess = () => {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1, ease: "easeInOut" }}
-            whileHover={{ scale: 1.1 }} // ✅ Add hover effect
+            whileHover={{ scale: 1.1 }}  
             />
         </Col>
 
-        {/* Right Side: Content */}
+ 
         <Col md={6} data-aos="fade-left">
           <h2 className="mb-4">With InsurXpert,no more hassles & no more worries </h2>
           <h6 style={{color:"white", fontWeight:"bold"}}>

@@ -1,7 +1,7 @@
  import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { motion } from "framer-motion";
-import "./HowItWorks.css"; // Ensure this file exists for custom styling
+import "./HowItWorks.css";  
 
 export const steps = [
   {
@@ -45,7 +45,7 @@ const HowItWorks = () => {
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
-        viewport={{ once: true }} // Ensures animation happens only once when scrolled into view
+        viewport={{ once: true }}  
       >
         How It Works
       </motion.h2>
@@ -57,10 +57,10 @@ const HowItWorks = () => {
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, delay: index * 0.3, ease: "easeInOut" }}
-              viewport={{ once: true }} // Ensures animation triggers only once when in view
+              viewport={{ once: true }}  
             >
               <Card className="h-100 shadow-sm p-3">
-                {/* Animated Icon */}
+                 
                 <motion.div
                   className="step-icon mb-3"
                   animate={{ scale: [1, 1.3, 1] }}
@@ -70,7 +70,7 @@ const HowItWorks = () => {
                 </motion.div>
 
                 <Card.Body>
-                  {/* Animated Title */}
+                   
                   <motion.h4
                     className="step-title"
                     initial={{ opacity: 0, x: -30 }}
@@ -81,7 +81,7 @@ const HowItWorks = () => {
                     {step.title}
                   </motion.h4>
 
-                  {/* Stylish Font for Description */}
+                   
                   <p className="step-description">{step.description}</p>
                 </Card.Body>
               </Card>
